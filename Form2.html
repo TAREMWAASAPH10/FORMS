@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+</head>
+
+<style>
+      form{
+            background-color: rgba(229, 47, 144, 0.462);
+            max-width: 600px;
+            align-content: center;
+            margin: auto;
+            padding: 15px;
+           display: block;     
+           font-size: 1.5em;
+      }
+    select{
+           margin-left: 9em;
+      }
+ .P1, .P3 {
+      display: flex;
+ }
+ label{
+      width: 20%;
+ }
+
+.P2 {
+      margin-left: 10px;
+}
+.Error{
+     color: rgb(255, 0, 0);
+}
+</style>
+
+<body>
+      <form action="" method="get"  onsubmit="return validateForm()">
+            <h1>REGISTRATION</h1>
+
+        <p class="P1">
+            <label for="" >Nom et Prenom*:</label>
+            <input type="text" name="" id="Nameinput"  >
+            <span class="Error" id="Nom-Error"></span>
+       </p>
+
+       <p class="P2">
+            <label for="CIN">CIN*:</label>
+           <input type="text" name="" id="Cin" > 
+           <span class="Error" id="Cin-Error"></span> 
+       </p>
+
+       <p class="P3">
+            <label for="email">Email*: </label>
+            <input type="email" name="" id="Email" >
+            <span class="Error" id="Email-Error"></span>
+       </p>
+
+       <p>
+           <label for="">Level</label>
+            <input type="radio" name="1" id="">Secondaire
+             <input type="radio" name="1" id="">Universitaire
+             <input type="radio" name="1" id="">Autre 
+       </p>
+
+     <label for="Modules">Training Modules:</label> <br>
+  <select name="" id="select" multiple>
+            <option value="">Beauritique</option>
+            <option value="">SE et Reasaeux info</option>
+            <option value="">TIC</option>
+  </select>
+  <p><span class="Error" id="Error-Modules"></span></p>
+  <p>
+       <button type="submit">Complete</button>
+       <button type="reset">Cancel</button>
+</p>
+
+<p id="complete-msge"></p>
+      </form>
+
+      <script>
+          // Get elements
+const nameInput = document.getElementById("Nameinput");
+const form = document.querySelector("form");
+
+// 1. Block numbers while typing
+nameInput.addEventListener("keypress", function (event) {
+    const char = String.fromCharCode(event.which);
+
+    if (!/[A-Za-z\s]/.test(char)) {
+        event.preventDefault();
+    }
+});
+
+// 2. Clean pasted input
+nameInput.addEventListener("input", function () {
+    this.value = this.value.replace(/[^A-Za-z\s]/g, "");
+});
+
+// 3. Form validation
+function validateForm() {
+    const Nameinput = nameInput.value.trim();
+    const Cin = document.getElementById("Cin").value.trim();
+    const Email = document.getElementById("Email").value.trim();
+    const select = document.getElementById("select"); // make sure your select has this id
+    const selected = Array.from(select.selectedOptions);
+
+    // Clear old errors
+    document.getElementById("Nom-Error").textContent = "";
+    document.getElementById("Cin-Error").textContent = "";
+    document.getElementById("Email-Error").textContent = "";
+    document.getElementById("Error-Modules").textContent = "";
+
+    // Name validation
+    if (Nameinput === "" || !/^[A-Za-z\s]+$/.test(Nameinput)) {
+        document.getElementById("Nom-Error").textContent = "Enter a valid name (letters only)";
+        return false;
+    }
+
+    // CIN validation
+    if (Cin === "" || Cin.length !== 8 || isNaN(Cin)) {
+        document.getElementById("Cin-Error").textContent = "CIN must be 8 digits";
+        return false;
+    }
+
+    // Email validation
+    if (Email === "" || !Email.includes("@") || !Email.includes(".")) {
+        document.getElementById("Email-Error").textContent = "Invalid Email";
+        return false;
+    }
+
+    // Select validation
+    if (selected.length > 2 || selected.length  ==0) {
+        document.getElementById("Error-Modules").textContent = "You can only select up to 2 options";
+        return false;
+    }
+
+    alert("Registration Complete");
+    return true;
+}
+      </script>
+
+   
+</body>
+</html>

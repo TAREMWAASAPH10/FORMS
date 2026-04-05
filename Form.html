@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+</head>
+<style>
+       body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f5;
+ }
+
+ h1{
+    text-align: center;
+    color: #333;
+ }
+
+ form{
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+ }
+
+ input[type="text"],  input[type="password"], select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px;
+    box-sizing: border-box;
+    font-size: 16px;
+ }
+
+ select{
+width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #fff;
+    appearance: none;
+ }
+
+ textarea{
+    resize: vertical;
+ }
+
+ input[type="reset"], input[type="submit"], input[type= "checkbox" ] {
+background-color: #007bff;
+color: #fff;
+padding:10px 20px; ;
+cursor: pointer;
+border-radius: 5px;
+font-size: 16px;
+border: none;
+ }
+
+ input[type="reset"]:hover, input[type="submit"]:hover, 
+ input[type= "checkbox" ]:hover {
+background-color: #0056b3;
+ }
+.error-message {
+    color: red;
+    font-size: 20px;
+    margin-top: 5px;
+}
+</style>
+
+<body>
+
+      
+<H1>FORM VALIDATION</H1>  
+<form action="" name="RegForm"  onreset="resetErrors()" id="formd">
+<p>
+    <label for="name">Name: </label>
+    <input type="text" id="Nname" name="Name" placeholder="Enter Your Name">
+    <span id="name-error" class="error-message"></span>
+</p>
+
+<p>
+        <label for="address">Address: </label>
+        <input type="text" name="address" id="Address" placeholder="Enter Your Name">
+        <span id="address-error" class="error-message"></span>
+</p>
+
+<p>
+<label for="email">E-mail Adress: </label>
+<input type="text" name="email" id="Email" placeholder="Enter Your Email">
+<span id="email-error" class="error-message"></span>
+</p>
+
+<p>
+<label for="password">Password: </label>
+<input type="password" name="password" id="Password">
+<span id="password-error" class="error-message"></span>
+</p>
+
+<p>
+    <label for="subject">Select Your Subject: </label>
+    <select name="Subject" id="subject">
+        <option value="">Select the course</option>
+        <option value="BTECH">BTECH</option>
+        <option value="BBA">BBA</option>
+        <option value="BCA">BCA</option>
+        <option value="B.COM">BCOM </option>
+    </select>
+    <span id="subject-error" class="error-message"></span>
+</p>
+
+<p>
+    <label for="comment" >College Name: </label>
+    <textarea name="Comment" id="comment"></textarea>
+</p>
+
+<p>
+    <input type="checkbox" name="agree" id="Agree">
+    <label for="agree">I agree to the above information</label>
+    <span id="agree-error" class="error-message"></span>
+</p>
+
+<p >
+
+<input type="submit" value="Send" name="Submit">
+<input type="reset" value="Reset" name="Reset">
+</p>
+
+</form>
+
+<!-- Section to display stored info -->
+ <section id="Asa">
+<h2>Stored Information</h2>
+<p><strong>Name:</strong>            <span id="Named"></span></p>
+<p><strong>Address:</strong>         <span id="Addressd"></span></p>
+<p><strong>Email:</strong>             <span id="Emaild"></span></p>
+<p><strong>Password</strong>      <span id="Passwordd"></span></p>
+<p><strong>Subject:</strong>          <span id="Subjectd"></span></p>
+</section>
+
+<script>
+ //Form validation JAVASCRIPT
+    
+document.getElementById("formd").addEventListener("submit", function(e) {
+  e.preventDefault();
+  if (validateForm()) {
+    saveinfo();
+    displayinfo();
+  }
+});
+
+function validateForm() {
+  const Nname = document.getElementById("Nname").value.trim();
+  const Address = document.getElementById("Address").value.trim();
+  const Email = document.getElementById("Email").value.trim();
+  const Password = document.getElementById("Password").value.trim();
+  const subject = document.getElementById("subject").value.trim();
+  const Agree = document.getElementById("Agree");
+
+  // clear errors first
+  document.getElementById("name-error").textContent = "";
+  document.getElementById("address-error").textContent = "";
+  document.getElementById("email-error").textContent = "";
+  document.getElementById("password-error").textContent = "";
+  document.getElementById("subject-error").textContent = "";
+  document.getElementById("agree-error").textContent = "";
+
+  if (Nname === "" || /\d/.test(Nname)) {
+    document.getElementById("name-error").textContent = "Please Enter a Valid Name";
+    return false;
+  }
+  if (Address === "") {
+    document.getElementById("address-error").textContent = "Please Enter Your Correct Address";
+    return false;
+  }
+  if (Email === "" || !Email.includes("@") || !Email.includes(".")) {
+    document.getElementById("email-error").textContent = "Please Enter a Valid Email";
+    return false;
+  }
+  if (Password === "" || Password.length < 7) {
+    document.getElementById("password-error").textContent = "You must enter a password above 7 characters";
+    return false;
+  }
+  if (subject === "") {
+    document.getElementById("subject-error").textContent = "You must select your course";
+    return false;
+  }
+  if (!Agree.checked) {
+    document.getElementById("agree-error").textContent = "You need to agree to conditions";
+    return false;
+  }
+
+  alert("You have submitted your form successfully");
+  return true;
+  
+}
+
+function saveinfo() {
+  localStorage.setItem("Nname", document.getElementById("Nname").value.trim());
+  localStorage.setItem("Address", document.getElementById("Address").value.trim());
+  localStorage.setItem("Email", document.getElementById("Email").value.trim());
+  localStorage.setItem("Password", document.getElementById("Password").value.trim());
+  localStorage.setItem("subject", document.getElementById("subject").value.trim());
+}
+
+function displayinfo() {
+document.getElementById("Asa").style.backgroundColor = "lightgreen";
+  document.getElementById("Named").textContent = localStorage.getItem("Nname") || "";
+  document.getElementById("Addressd").textContent = localStorage.getItem("Address") || "";
+  document.getElementById("Emaild").textContent = localStorage.getItem("Email") || "";
+  document.getElementById("Passwordd").textContent = localStorage.getItem("Password") || "";
+  document.getElementById("Subjectd").textContent = localStorage.getItem("subject") || "";
+}
+
+// Load stored info automatically when page opens
+window.onload = displayinfo();  
+
+</script>
+      
+</body>
+</html>
