@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+      background-color: rgba(73, 113, 223, 0.853);
+}
+
+
+fieldset {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+
+label {
+    display: inline-block;
+    width: 120px; 
+    margin-bottom: 10px;
+}
+
+input, 
+input[type="email"], 
+input[type="url"], 
+input[type="date"], 
+select, 
+textarea {
+    border: 1px solid #999;
+    padding: 4px;
+    font-size: 14px;
+}
+
+
+select {
+    width: 200px;
+}
+
+
+textarea {
+    width: 100%;
+    margin-top: 10px;
+    resize: vertical;
+}
+
+
+.button-container {
+    margin-top: 15px;
+}
+
+button {
+    padding: 5px 15px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+
+input[type="checkbox"], 
+input[type="radio"] {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+</style>
+<body>
+
+<form id="registrationForm">
+
+    <fieldset>
+        <legend>Your Contact Details</legend>
+        
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" placeholder="your last name"><br><br>
+
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" placeholder="your first name"><br><br>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" placeholder="enter your email"><br><br>
+
+        <label for="website">Your Site:</label>
+        <input type="url" id="website"><br><br>
+
+        <label for="code">Code:</label>
+        <input type="text" id="code"><br><br>
+
+        <label>Gender:</label>
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Female"> Female<br><br>
+
+        <label for="country">Country:</label>
+        <select id="country">
+            <option value="">Your country</option>
+            <optgroup label="Africa">
+                <option value="Tunisia">Tunisia</option>
+                <option value="Algeria">Algeria</option>
+                <option value="Morocco">Morocco</option>
+            </optgroup>
+            <optgroup label="Europe">
+                <option value="France">France</option>
+                <option value="Belgium">Belgium</option>
+            </optgroup>
+
+        </select>
+    </fieldset>
+
+
+    <fieldset>
+        <legend>Choose at least 2 Trainings:</legend>
+        <input type="checkbox" name="training" value="HTML5"> Training in HTML5<br>
+        <input type="checkbox" name="training" value="CSS3"> Training in CSS3<br>
+        <input type="checkbox" name="training" value="JS"> Training in JS<br><br>
+        
+        <textarea id="textinput" placeholder="Describe your training needs" rows="4" cols="50"></textarea>
+    </fieldset>
+
+ 
+    <fieldset>
+        <legend>Send us your photo</legend>
+        <input type="file" id="fileinput">
+    </fieldset>
+
+    <br>
+    <button type="reset">Clear</button>
+    <button type="submit">Send</button>
+</form>
+
+<script>
+
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+   
+    event.preventDefault();
+
+
+    const firstName = document.getElementById('firstName').value;
+    const country = document.getElementById('country').value;
+    const email = document.getElementById("email").value;
+    const fileinput = document.getElementById("fileinput");
+    const dateInput = document.getElementById('dob').value;
+    const selectedTrainings = document.querySelectorAll('input[name="training"]:checked');
+    const genderSelected = document.querySelector('input[name="gender"]:checked');
+    const textinput = document.getElementById("textinput").value;
+    if (firstName === "" || country === "") {
+        alert("Please fill in the required fields.");
+    }
+    else if(!email.includes('@')){
+        alert("the email should contain '@'")
+    }
+    else if(fileinput.files.length === 0){
+        alert("Error: please get a file to upload.")
+    }
+    else if(textinput.length < 15){
+        alert('Error: Your message must be at least 15 characters long. Current count: ' + textinput.length);
+    }
+    else if (selectedTrainings.length < 2) {
+    alert('Error: Please select at least 2 training courses.');
+    
+  }
+     else if (dateInput === "") {
+    alert('Error: Please select a date.');
+    
+  }
+     else if (!genderSelected) {
+    alert('Error: Please select your gender.');
+
+  }
+
+    else {
+        console.log("Form Submitted!");
+        console.log("Name:", firstName);
+        console.log("Country:", country);
+        alert("Thank you, " + firstName + "! Your form has been sent.");
+    }
+});
+
+
+</script>
+
+
+</body>
+</html>
